@@ -4,7 +4,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 function Lobby() {
   const { roomId } = useParams();
   const location = useLocation();
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_API_BACKEND_URL;
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const playerName = queryParams.get('name');

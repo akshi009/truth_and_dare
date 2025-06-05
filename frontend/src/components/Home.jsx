@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import '../App';
 
 function Home() {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  // Use different URLs based on environment
+  const BASE_URL = import.meta.env.VITE_API_BACKEND_URL;
+    
   const [playerName, setPlayerName] = useState('');
   const [roomId, setRoomId] = useState('');
   const [error, setError] = useState('');

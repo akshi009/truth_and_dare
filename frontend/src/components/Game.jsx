@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 function Game() {
     const [gameState, setGameState] = useState(null);
-    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const BASE_URL = import.meta.env.VITE_API_BACKEND_URL;
     const [currentPlayer, setCurrentPlayer] = useState(null);
     const [prompt, setPrompt] = useState('');
     const { roomId } = useParams();
