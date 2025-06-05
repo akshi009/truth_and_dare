@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 function Game() {
     const [gameState, setGameState] = useState(null);
+    const BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const [currentPlayer, setCurrentPlayer] = useState(null);
     const [prompt, setPrompt] = useState('');
     const { roomId } = useParams();
@@ -12,7 +13,7 @@ function Game() {
   
     useEffect(() => {
       const fetchGameState = async () => {
-        const res = await fetch(`http://localhost:3000/room/${roomId}`);
+        const res = await fetch(`${BASE_URL}/room/${roomId}`);
         const data = await res.json();
         setGameState(data);
         const player = data.players[data.currentTurn];
@@ -30,13 +31,13 @@ function Game() {
     }, [gameState]);
   
     const select = async (type) => {
-      const res = await fetch(`http://localhost:3000/prompts?type=${type}`);
+      const res = await fetch(`${BASE_URL}/prompts?type=${type}`);
       const data = await res.json();
       setPrompt(data.prompt);
     };
 
     const pass = async () => {
-        const res = await fetch(`http://localhost:3000/room/${roomId}/next`, {
+        const res = await fetch(`${BASE_URL}/room/${roomId}/next`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: 'truth' }),
@@ -45,7 +46,7 @@ function Game() {
         setPrompt('');
         
         // Fetch updated game state to get latest scores
-        const updatedRes = await fetch(`http://localhost:3000/room/${roomId}`);
+        const updatedRes = await fetch(`${BASE_URL}/room/${roomId}`);
         const updatedData = await updatedRes.json();
         setGameState(updatedData);
     }
@@ -53,7 +54,7 @@ function Game() {
     const goToNextTurn = async () => {
       // Award 1 point to the current player BEFORE moving to next turn
       if (currentPlayer) {
-        await fetch(`http://localhost:3000/room/${roomId}/score`, {
+        await fetch(`${BASE_URL}/room/${roomId}/score`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
@@ -64,7 +65,7 @@ function Game() {
       }
 
       // Then move to next turn
-      const res = await fetch(`http://localhost:3000/room/${roomId}/next`, {
+      const res = await fetch(`${BASE_URL}/room/${roomId}/next`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'truth' }),
@@ -73,7 +74,7 @@ function Game() {
       setPrompt('');
       
       // Fetch updated game state to get both new turn and updated scores
-      const updatedRes = await fetch(`http://localhost:3000/room/${roomId}`);
+      const updatedRes = await fetch(`${BASE_URL}/room/${roomId}`);
       const updatedData = await updatedRes.json();
       setGameState(updatedData);
     };

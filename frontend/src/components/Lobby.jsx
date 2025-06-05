@@ -4,6 +4,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 function Lobby() {
   const { roomId } = useParams();
   const location = useLocation();
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const playerName = queryParams.get('name');
@@ -15,7 +16,7 @@ function Lobby() {
   useEffect(() => {
     async function fetchPlayers() {
       try {
-        const res = await fetch(`http://localhost:3000/room/${roomId}/players`);
+        const res = await fetch(`${BASE_URL}/room/${roomId}/players`);
         if (!res.ok) throw new Error('Failed to fetch players');
         const data = await res.json();
         setPlayers(data.players);

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App';
 
 function Home() {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [playerName, setPlayerName] = useState('');
   const [roomId, setRoomId] = useState('');
   const [error, setError] = useState('');
@@ -19,13 +20,13 @@ function Home() {
     setError('');
 
     try {
-      const room = await fetch("http://localhost:3000/room", {
+      const room = await fetch(`${BASE_URL}/room`, {
         method: "POST",
       });
 
       const data = await room.json();
 
-      await fetch(`http://localhost:3000/room/${data.roomId}/join`, {
+      await fetch(`${BASE_URL}/room/${data.roomId}/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerName }),
@@ -54,7 +55,7 @@ function Home() {
     setError('');
 
     try {
-      const response = await fetch(`http://localhost:3000/room/${roomId}/join`, {
+      const response = await fetch(`${BASE_URL}/room/${roomId}/join`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerName }),

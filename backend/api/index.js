@@ -125,5 +125,4 @@ app.post('/room/:roomId/score',(req,res)=>{
 })
 
 
-app.listen(Port, () => {
-  console.log(`we are on PORT ${Port}`)})
+export default app;
